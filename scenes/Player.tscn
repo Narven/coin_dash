@@ -1,0 +1,51 @@
+[gd_scene load_steps=9 format=2]
+
+[ext_resource path="res://assets/player/idle/player-idle-4.png" type="Texture" id=1]
+[ext_resource path="res://assets/player/idle/player-idle-2.png" type="Texture" id=2]
+[ext_resource path="res://assets/player/idle/player-idle-3.png" type="Texture" id=3]
+[ext_resource path="res://assets/player/idle/player-idle-1.png" type="Texture" id=4]
+[ext_resource path="res://scripts/Player.gd" type="Script" id=5]
+
+[sub_resource type="AtlasTexture" id=2]
+atlas = ExtResource( 4 )
+region = Rect2( 0, 0, 33, 32 )
+
+[sub_resource type="SpriteFrames" id=1]
+animations = [ {
+"frames": [  ],
+"loop": true,
+"name": "hurt",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 2 ), ExtResource( 2 ), ExtResource( 3 ), ExtResource( 1 ) ],
+"loop": true,
+"name": "idle",
+"speed": 8.0
+}, {
+"frames": [  ],
+"loop": true,
+"name": "run",
+"speed": 5.0
+} ]
+
+[sub_resource type="RectangleShape2D" id=3]
+extents = Vector2( 8.5, 9 )
+
+[node name="Player" type="Area2D"]
+script = ExtResource( 5 )
+__meta__ = {
+"_edit_group_": true
+}
+speed = 350
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+frames = SubResource( 1 )
+animation = "idle"
+frame = 2
+offset = Vector2( 0, -5 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( -1, 2 )
+shape = SubResource( 3 )
+
+[connection signal="area_entered" from="." to="." method="_on_Player_area_entered"]
